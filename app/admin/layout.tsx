@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import AdminSidebar from '@/components/admin/AdminSidebar';
+import { User } from '@/lib/types/database.types';
 
 export default async function AdminLayout({
   children,
@@ -19,7 +20,7 @@ export default async function AdminLayout({
     .from('users')
     .select('*')
     .eq('id', authUser.id)
-    .single();
+    .single<User>();
 
   if (!user || user.role !== 'admin') {
     redirect('/login');
