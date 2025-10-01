@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
   --background: #ffffff;
@@ -23,4 +24,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fix input text visibility */
+input, select, textarea {
+  color: #374151 !important; /* gray-700 */
+  background-color: white !important;
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Ensure dark text in dark mode too */
+@media (prefers-color-scheme: dark) {
+  input, select, textarea {
+    color: #1f2937 !important;
+    background-color: white !important;
+  }
 }
