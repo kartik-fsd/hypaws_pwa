@@ -38,7 +38,7 @@ export default function AddLeadPage() {
         return;
       }
 
-      const { error: insertError } = await supabase.from('leads').insert({
+      const leadData = {
         name: formData.name,
         phone_number: formData.phoneNumber,
         pet_type: formData.petType,
@@ -50,7 +50,10 @@ export default function AddLeadPage() {
         area_name: formData.areaName || null,
         nearby_landmark: formData.nearbyLandmark || null,
         tasker_id: user.id,
-      });
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: insertError } = await supabase.from('leads').insert(leadData as any);
 
       if (insertError) {
         setError(insertError.message);

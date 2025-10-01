@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import LocationTracker from '@/components/tasker/LocationTracker';
+import { User } from '@/lib/types/database.types';
 
 async function TaskerNavbar({ userName }: { userName: string }) {
   return (
@@ -39,7 +40,7 @@ export default async function TaskerLayout({
     .from('users')
     .select('*')
     .eq('id', authUser.id)
-    .single();
+    .single<User>();
 
   if (!user || user.role !== 'tasker') {
     redirect('/login');

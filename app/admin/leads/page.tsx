@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { LeadWithTasker } from '@/lib/types/database.types';
 
 export default async function AdminLeadsPage() {
   const supabase = await createServerSupabaseClient();
@@ -6,7 +7,8 @@ export default async function AdminLeadsPage() {
   const { data: leads } = await supabase
     .from('leads_with_tasker')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .returns<LeadWithTasker[]>();
 
   return (
     <div className="p-8">

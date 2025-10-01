@@ -1,5 +1,6 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
+import { Lead } from '@/lib/types/database.types';
 
 export default async function TaskerDashboardPage() {
   const supabase = await createServerSupabaseClient();
@@ -14,7 +15,8 @@ export default async function TaskerDashboardPage() {
     .from('leads')
     .select('*')
     .eq('tasker_id', authUser.id)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .returns<Lead[]>();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">

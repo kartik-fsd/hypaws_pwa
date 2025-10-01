@@ -1,5 +1,6 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import TaskerAccessForm from '@/components/admin/TaskerAccessForm';
+import { User } from '@/lib/types/database.types';
 
 export default async function AdminTaskersPage() {
   const supabase = await createServerSupabaseClient();
@@ -8,7 +9,8 @@ export default async function AdminTaskersPage() {
     .from('users')
     .select('*')
     .eq('role', 'tasker')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .returns<User[]>();
 
   return (
     <div className="p-8">

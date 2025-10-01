@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { LeadWithTasker } from '@/lib/types/database.types';
 
 export default async function AdminDashboardPage() {
   const supabase = await createServerSupabaseClient();
@@ -16,7 +17,8 @@ export default async function AdminDashboardPage() {
     .from('leads_with_tasker')
     .select('*')
     .order('created_at', { ascending: false })
-    .limit(5);
+    .limit(5)
+    .returns<LeadWithTasker[]>();
 
   return (
     <div className="p-8">

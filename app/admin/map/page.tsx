@@ -1,6 +1,6 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import MapPageClient from '@/components/admin/MapPageClient';
-import { TaskerWithLocationHistory } from '@/lib/types/database.types';
+import { TaskerWithLocationHistory, User, Location } from '@/lib/types/database.types';
 
 export default async function AdminMapPage() {
   const supabase = await createServerSupabaseClient();
@@ -10,7 +10,8 @@ export default async function AdminMapPage() {
     .from('users')
     .select('*')
     .eq('role', 'tasker')
-    .order('name', { ascending: true });
+    .order('name', { ascending: true })
+    .returns<User[]>();
 
   // Get all locations for each tasker
   const taskersWithHistory: TaskerWithLocationHistory[] = await Promise.all(
@@ -19,7 +20,8 @@ export default async function AdminMapPage() {
         .from('locations')
         .select('*')
         .eq('tasker_id', tasker.id)
-        .order('timestamp', { ascending: true });
+        .order('timestamp', { ascending: true })
+        .returns<Location[]>();
 
       const { count: leadCount } = await supabase
         .from('leads')

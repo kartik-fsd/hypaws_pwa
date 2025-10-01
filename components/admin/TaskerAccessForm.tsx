@@ -49,7 +49,8 @@ export default function TaskerAccessForm() {
           role: 'tasker',
           name: name,
           assigned_area: assignedArea || null,
-        });
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any);
 
         if (profileError) {
           setError(profileError.message);

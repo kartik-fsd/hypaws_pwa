@@ -51,7 +51,8 @@ export class LocationService {
         latitude: position.latitude,
         longitude: position.longitude,
         accuracy: position.accuracy,
-      });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
 
       if (error) {
         return { success: false, error: error.message };
